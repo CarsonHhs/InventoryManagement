@@ -1,0 +1,185 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled0.ipynb",
+      "provenance": [],
+      "mount_file_id": "1J4CqsC9i6s3jMCAQwcgPAucIi51XcLoD",
+      "authorship_tag": "ABX9TyNQKNvNyA7a+7VInc0N8BYz",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/CarsonHhs/InventoryManagement/blob/main/prophet\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "pKD0BHHBU8Ot"
+      },
+      "source": [
+        "import numpy as np\n",
+        "import pandas as pd"
+      ],
+      "execution_count": 14,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "DuoOPkelG6Fx"
+      },
+      "source": [
+        "df =pd.read_csv('/content/drive/MyDrive/colab/10-01-00014.csv',parse_dates= ['Date'],dayfirst=True)"
+      ],
+      "execution_count": 20,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "q4UUl4h3HLxv"
+      },
+      "source": [
+        "df.set_index('Date', inplace=True)"
+      ],
+      "execution_count": 29,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 450
+        },
+        "id": "KA31ubJ3NGy4",
+        "outputId": "dd5988e7-1285-4cbf-e2c9-8f2dd23852d1"
+      },
+      "source": [
+        "df.resample('w').sum()"
+      ],
+      "execution_count": 31,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Qty</th>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>Date</th>\n",
+              "      <th></th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>2014-01-12</th>\n",
+              "      <td>25</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2014-01-19</th>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2014-01-26</th>\n",
+              "      <td>22</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2014-02-02</th>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2014-02-09</th>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>...</th>\n",
+              "      <td>...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2021-04-11</th>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2021-04-18</th>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2021-04-25</th>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2021-05-02</th>\n",
+              "      <td>0</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2021-05-09</th>\n",
+              "      <td>13</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "<p>383 rows × 1 columns</p>\n",
+              "</div>"
+            ],
+            "text/plain": [
+              "            Qty\n",
+              "Date           \n",
+              "2014-01-12   25\n",
+              "2014-01-19    0\n",
+              "2014-01-26   22\n",
+              "2014-02-02    0\n",
+              "2014-02-09    0\n",
+              "...         ...\n",
+              "2021-04-11    0\n",
+              "2021-04-18    0\n",
+              "2021-04-25    0\n",
+              "2021-05-02    0\n",
+              "2021-05-09   13\n",
+              "\n",
+              "[383 rows x 1 columns]"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 31
+        }
+      ]
+    }
+  ]
+}
